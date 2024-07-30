@@ -26,7 +26,7 @@ public class FilterAndSortService{
         this.productRepository = productRepository;
 	}
 	
-	public List<FilteredProducts> filtered_Prodcuts(double minPrice, double maxPrice) throws Exception{ // get the product from repository and map to the DTO
+	public ArrayList<FilteredProducts> filtered_Prodcuts(double minPrice, double maxPrice) throws Exception{ // get the product from repository and map to the DTO
 		List<Products>filtered_productList = new ArrayList<>();
 		
 		//List<Products>filtered = filtered_productList.stream().filter(p -> p.getPrice()>= minPrice && p.getPrice()<=maxPrice).collect(Collectors.toList());
@@ -39,7 +39,7 @@ public class FilterAndSortService{
 	 Collections.sort(filtered_productList, (a,b)-> Double.compare(a.getPrice(), b.getPrice()));
                 
 		
-		return getFilterProductDTO(filtered_productList);
+		return (ArrayList<FilteredProducts>) getFilterProductDTO(filtered_productList);
 		
 	}
 	

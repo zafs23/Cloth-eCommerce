@@ -41,10 +41,10 @@ public class SampleController {
 
 		try {
 
-			List<FilteredProducts> books = new ArrayList<FilteredProducts>();
+			ArrayList<FilteredProducts> books = new ArrayList<FilteredProducts>();
 			books = productService.filtered_Prodcuts(init_price, final_price);
 
-			return new ResponseEntity<ArrayList<FilteredProducts>>((ArrayList<FilteredProducts>) books,HttpStatus.OK);
+			return new ResponseEntity<ArrayList<FilteredProducts>>(books,HttpStatus.OK);
 			//return new ResponseEntity.ok().body(books);
 
 		} catch (Exception E) {
