@@ -1,0 +1,18 @@
+[
+    {
+      "barcode": "74001755",
+      "item": "Ball Gown",
+      "category": "Full Body Outfits",
+      "price": 3548,
+      "discount": 7,
+      "available": 1
+    },
+    {
+      "barcode": "74002423",
+      "item": "Shawl",
+      "category": "Accessories",
+      "price": 758,
+      "discount": 12,
+      "available": 1
+    }
+]
