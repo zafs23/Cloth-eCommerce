@@ -4,19 +4,19 @@ package com.filtering_service.filter_and_sort.dto;
 
 public class FilteredProducts {
 	
-	private String barCode;
+	private String barcode;
 	
-	public FilteredProducts(String barCode) {
-		this.barCode = barCode;
+	public FilteredProducts(String barcode) {
+		this.barcode = barcode;
 	}
 	
 
-	public String getBarCode() {
-		return barCode;
+	public String getbarcode() {
+		return barcode;
 	}
 
-	public void setBarCode(String barCode) {
-		this.barCode = barCode;
+	public void setbarcode(String barcode) {
+		this.barcode = barcode;
 	}
 
 	

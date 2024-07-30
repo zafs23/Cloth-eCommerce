@@ -2,23 +2,23 @@ package com.filtering_service.filter_and_sort.dto;
 
 public class SortedProducts{
 	
-	private String barCode;
+	private String barcode;
 	
-	public SortedProducts(String barCode) {
-		this.barCode = barCode;
+	public SortedProducts(String barcode) {
+		this.barcode = barcode;
 	}
 	
-	public SortedProducts(String barCode, String item, int price, int discount, boolean available) {
+	public SortedProducts(String barcode, String item, int price, int discount, boolean available) {
 		super();
-		this.barCode = barCode;
+		this.barcode = barcode;
 	}
 	
 	public String getBarCode() {
-		return this.barCode;
+		return this.barcode;
 	}
 
-	public void setBarCode(String barCode) {
-		this.barCode = barCode;
+	public void setBarCode(String barcode) {
+		this.barcode = barcode;
 	}
 
 }
