@@ -4,7 +4,12 @@ public class SortedProducts{
 	
 	private String barcode;
 	
+	public SortedProducts() {
+		
+	}
+	
 	public SortedProducts(String barcode) {
+		super();
 		this.barcode = barcode;
 	}
 	

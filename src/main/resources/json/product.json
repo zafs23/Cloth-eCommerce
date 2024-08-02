@@ -14,5 +14,21 @@
       "price": 758,
       "discount": 12,
       "available": 1
+    },
+    {
+      "barcode": "74001795",
+      "item": "b",
+      "category": "f",
+      "price": 4500,
+      "discount": 7,
+      "available": 1
+    },
+    {
+      "barcode": "74002450",
+      "item": "S",
+      "category": "A",
+      "price": 790,
+      "discount": 12,
+      "available": 1
     }
 ]

@@ -1,12 +1,11 @@
 package com.filtering_service.filter_and_sort;
 import static org.hamcrest.Matchers.*;
+
+
 import org.junit.jupiter.api.Test;
 
 import org.springframework.boot.test.context.SpringBootTest;
-
-
-
-
+import org.junit.After;
 //import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
@@ -16,13 +15,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
+import com.filtering_service.filter_and_sort.controller.FilterAndSortController;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.aspectj.lang.annotation.Before;
+
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.mock;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -30,12 +36,22 @@ import static org.hamcrest.Matchers.hasSize;
 public class FilterAndSortApplicationTests {
     @Autowired
     private MockMvc mockMvc;
+    
+    
+//    @Test
+//    @DisplayName("Filter Product Check 0")   
+//    public void FilterProduct1() throws Exception {
+//        this.mockMvc.perform(get("/filter-product"))
+//                .andDo(print())
+//                .andExpect(jsonPath("$[*].barCode", containsInRelativeOrder( "74002423", "74002445", "74001755", "74001795" )))
+//                .andExpect(status().is2xxSuccessful());
+//    }
 
     
     @Test
     @DisplayName("Filter Price Check 1")   
     public void FilterPrice1() throws Exception {
-        mockMvc.perform(get("/filter/price/100/4500"))
+        this.mockMvc.perform(get("/filter/price/100/4500"))
                 .andDo(print())
                 .andExpect(jsonPath("$.*").isArray())
                 .andExpect(jsonPath("$.*", hasSize(453)))
@@ -46,7 +62,7 @@ public class FilterAndSortApplicationTests {
     @Test
     @DisplayName("Filter Price Check 2")   
     public void FilterPriceCheck2() throws Exception {
-        mockMvc.perform(get("/filter/price/100/101"))
+        this.mockMvc.perform(get("/filter/price/100/101"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
@@ -54,7 +70,7 @@ public class FilterAndSortApplicationTests {
     @Test
     @DisplayName("Filter Price Check 3")   
     public void FilterPriceCheck3() throws Exception {
-        mockMvc.perform(get("/filter/price/500/3650"))
+        this.mockMvc.perform(get("/filter/price/500/3650"))
                 .andDo(print())
                 .andExpect(jsonPath("$.*").isArray())
                 .andExpect(jsonPath("$.*", hasSize(318)))
@@ -66,7 +82,7 @@ public class FilterAndSortApplicationTests {
     @Test
     @DisplayName("Filter Price Check 4")   
     public void FilterPriceCheck4() throws Exception {
-        mockMvc.perform(get("/filter/price/3520/3000"))
+        this.mockMvc.perform(get("/filter/price/3520/3000"))
         		.andDo(print())
         		.andExpect(status().is4xxClientError());
     }
@@ -76,7 +92,7 @@ public class FilterAndSortApplicationTests {
     @Test
     @DisplayName("Sort Check ")   
     public void SortCheck() throws Exception {
-        mockMvc.perform(get("/sort/price"))
+        this.mockMvc.perform(get("/sort/price"))
                 .andDo(print())
                 .andExpect(jsonPath("$.*").isArray())
                 .andExpect(jsonPath("$.*", hasSize(500)))

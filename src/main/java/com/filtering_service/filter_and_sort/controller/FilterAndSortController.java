@@ -2,11 +2,11 @@ package com.filtering_service.filter_and_sort.controller;
 
 import java.util.ArrayList;
 
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +21,7 @@ import com.filtering_service.filter_and_sort.service.FilterAndSortService;
 
 
 @RestController
-public class SampleController {
+public class FilterAndSortController {
 
 	final String uri = "https://jsonmock.hackerrank.com/api/inventory";
 	RestTemplate restTemplate = new RestTemplate();
@@ -33,23 +33,35 @@ public class SampleController {
 	
 	@Autowired
     FilterAndSortService productService;
+	
+	@GetMapping("/hello-world")
+	public String helloWorld() {
+		return "Hello World"; 
+	}
+	
 
 	@CrossOrigin
 	@GetMapping("/filter/price/{initial_price}/{final_price}")
-	private ResponseEntity< ArrayList<FilteredProducts>> filtered_books(@PathVariable("initial_price") int init_price , @PathVariable("final_price") int final_price)   
+	private ResponseEntity<ArrayList<FilteredProducts>> filtered_books(@PathVariable("initial_price") int init_price , @PathVariable("final_price") int final_price)   
 	{ 
 
 		try {
 
 			ArrayList<FilteredProducts> books = new ArrayList<FilteredProducts>();
 			books = productService.filtered_Prodcuts(init_price, final_price);
-
+			
+			if (books.size() == 0) {
+				throw new NotFoundException();
+			}
+				
 			return new ResponseEntity<ArrayList<FilteredProducts>>(books,HttpStatus.OK);
-			//return new ResponseEntity.ok().body(books);
 
-		} catch (Exception E) {
+		} catch (NotFoundException E) {
 			System.out.println("Error encountered : " + E.getMessage());
 			return new ResponseEntity<ArrayList<FilteredProducts>>(HttpStatus.NOT_FOUND);
+		} catch (Exception E) {
+			System.out.println("Error encountered : " + E.getMessage());
+			return new ResponseEntity<ArrayList<FilteredProducts>>(HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -62,11 +74,17 @@ public class SampleController {
 
 			SortedProducts[] ans = new SortedProducts[data.length()];
 			ans = productService.sorted_Products();
+			if (ans.length == 0) {
+				throw new NotFoundException();
+			}
 			return new ResponseEntity<SortedProducts[]>(ans, HttpStatus.OK);
 
-		} catch (Exception E) {
+		} catch (NotFoundException E) {
 			System.out.println("Error encountered : " + E.getMessage());
 			return new ResponseEntity<SortedProducts[]>(HttpStatus.NOT_FOUND);
+		} catch (Exception E) {
+			System.out.println("Error encountered : " + E.getMessage());
+			return new ResponseEntity<SortedProducts[]>(HttpStatus.BAD_REQUEST);
 		}
 
 	}
