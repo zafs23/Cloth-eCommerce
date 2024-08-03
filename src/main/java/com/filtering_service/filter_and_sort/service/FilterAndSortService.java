@@ -29,6 +29,15 @@ public class FilterAndSortService{
         this.productRepository = productRepository;
 	}
 	
+	public ArrayList<Products> createProducts (List<Products> products) throws Exception{
+		
+		try {
+			return (ArrayList<Products>)productRepository.saveAll(products);
+		}catch (Exception e) {
+			throw new BadRequestException();
+		}
+	}
+	
 	
 	public ArrayList<FilteredProducts> filtered_Prodcuts(double minPrice, double maxPrice) throws Exception{ // get the product from repository and map to the DTO
 		try {
