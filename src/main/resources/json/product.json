@@ -1,42 +1,42 @@
 [
-    {
-      "barcode": "74001755",
-      "item": "Ball Gown",
-      "category": "Full Body Outfits",
-      "price": 3548,
-      "discount": 7,
-      "available": 1
-    },
-    {
-      "barcode": "74002423",
-      "item": "Shawl",
-      "category": "Accessories",
-      "price": 758,
-      "discount": 12,
-      "available": 1
-    },
-    {
-      "barcode": "74001795",
-      "item": "jacket",
-      "category": "full body outfits",
-      "price": 4500,
-      "discount": 7,
-      "available": 1
-    },
-    {
-      "barcode": "74002450",
-      "item": "pants",
-      "category": "UnderWear",
-      "price": 790,
-      "discount": 12,
-      "available": 1
-    },
-    {
-      "barcode": "74003450",
-      "item": "Pants",
-      "category": "underwear",
-      "price": 800,
-      "discount": 11,
-      "available": 1
-    }
+	{
+		"barcode": "74001755",
+		"item": "Ball Gown",
+		"category": "Full Body Outfits",
+		"price": 3548,
+		"discount": 7,
+		"available": 1
+	},
+	{
+		"barcode": "74002423",
+		"item": "Shawl",
+		"category": "Accessories",
+		"price": 758,
+		"discount": 12,
+		"available": 1
+	},
+	{
+		"barcode": "74001795",
+		"item": "jacket",
+		"category": "full body outfits",
+		"price": 4500,
+		"discount": 7,
+		"available": 1
+	},
+	{
+		"barcode": "74002450",
+		"item": "pants",
+		"category": "UnderWear",
+		"price": 790,
+		"discount": 12,
+		"available": 1
+	},
+	{
+		"barcode": "74003450",
+		"item": "Pants",
+		"category": "underwear",
+		"price": 800,
+		"discount": 11,
+		"available": 1
+	}
 ]
