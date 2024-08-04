@@ -15,11 +15,4 @@ public interface ProductRepository extends JpaRepository<Products, String> {
 	public List<Products> findByItemIgnoreCaseInOrderByPriceDesc(@Param("item") List<String> item);
 	public List<Products> findByPriceGreaterThanEqualAndPriceLessThanEqualOrderByPriceAsc(double greater, double less);
 	public List<Products> findAllByOrderByPriceAsc();
-	
-	
-//	public List<Weather> findAllByOrderByIdAsc();
-//    public List<Weather> findAllByOrderByDateAsc();
-//    public List<Weather> findAllByOrderByDateDesc();
-//    public List<Weather> findAllByDate(Date date); // each mean different
-//    public List<Weather> findAllByCityIgnoreCase(String city);
 }
