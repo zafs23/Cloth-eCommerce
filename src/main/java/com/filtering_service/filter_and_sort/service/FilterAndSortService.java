@@ -64,14 +64,20 @@ public class FilterAndSortService {
 				itemList = productRepository.findByItemIgnoreCaseInOrderByPriceDesc(cityList);
 
 			}
+			
+			if (itemList == null) {
+				throw new BadRequestException();
+			}
 
 			return (ArrayList<SortedItems>) itemList.stream()
 					.map(product -> modelMapper.map(product, SortedItems.class)).collect(Collectors.toList());
 
 		} catch (ParseException e) {
 			throw new ParseException(0, "String is not parsable", e);
-		} catch (Exception e) {
+		} catch (NullPointerException e) {
 			throw new NullPointerException();
+		}catch (Exception e) {
+			throw new BadRequestException();
 		}
 
 	}
@@ -84,6 +90,10 @@ public class FilterAndSortService {
 			// filter
 			filtered_productList = productRepository
 					.findByPriceGreaterThanEqualAndPriceLessThanEqualOrderByPriceAsc(minPrice, maxPrice);
+			
+			if (filtered_productList == null) {
+				throw new BadRequestException();
+			}
 
 			return (ArrayList<FilteredProducts>) filtered_productList.stream()
 					.map(product -> modelMapper.map(product, FilteredProducts.class)).collect(Collectors.toList());
@@ -99,10 +109,14 @@ public class FilterAndSortService {
 			List<Products> sorted_productList = new ArrayList<>();
 
 			sorted_productList = productRepository.findAllByOrderByPriceAsc();
+			
+			if (sorted_productList == null) {
+				throw new BadRequestException();
+			}
 
 			return sorted_productList.stream().map(product -> modelMapper.map(product, SortedProducts.class))
 					.collect(Collectors.toList()).toArray(new SortedProducts[sorted_productList.size()]);
-		} catch (Exception e) {
+		} catch (BadRequestException e) {
 			throw new BadRequestException();
 		}
 

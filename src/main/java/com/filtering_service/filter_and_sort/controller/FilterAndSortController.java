@@ -3,6 +3,7 @@ package com.filtering_service.filter_and_sort.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.coyote.BadRequestException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,9 @@ public class FilterAndSortController {
 			}
 
 			itemList = productService.getItems(item, sort);
+			if(itemList.size() == 0) {
+				throw new NotFoundException();
+			}
 
 			return new ResponseEntity<ArrayList<SortedItems>>(itemList, HttpStatus.OK);
 			// return new ResponseEntity<FilteredProducts[]>(books.toArray(new
@@ -73,10 +77,13 @@ public class FilterAndSortController {
 			System.out.println("Error encountered : " + E.getMessage());
 			return new ResponseEntity<ArrayList<SortedItems>>(HttpStatus.NOT_FOUND);
 			// return new ResponseEntity<FilteredProducts[]>(HttpStatus.NOT_FOUND);
-		} catch (Exception E) {
+		} catch (BadRequestException E) {
 			System.out.println("Error encountered : " + E.getMessage());
 			// return new ResponseEntity<FilteredProducts[]>(HttpStatus.BAD_REQUEST);
 			return new ResponseEntity<ArrayList<SortedItems>>(HttpStatus.BAD_REQUEST);
+		} catch (Exception E) {
+			System.out.println("Error encountered : " + E.getMessage());
+			return new ResponseEntity<ArrayList<SortedItems>>(HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -126,6 +133,7 @@ public class FilterAndSortController {
 		try {
 
 			SortedProducts[] ans = new SortedProducts[data.length()];
+			
 			ans = productService.sorted_Products();
 			if (ans.length == 0) {
 				throw new NotFoundException();
