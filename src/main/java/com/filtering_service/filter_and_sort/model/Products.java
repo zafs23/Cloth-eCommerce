@@ -1,5 +1,6 @@
 package com.filtering_service.filter_and_sort.model;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -8,6 +9,7 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Products {
+	
 	@Id
 	@Column(name="id")
 	@JsonProperty("barcode")

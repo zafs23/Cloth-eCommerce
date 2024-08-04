@@ -1,23 +1,20 @@
 package com.filtering_service.filter_and_sort.dto;
 
-
-
-
-public class FilteredProducts {
+public class SortedItems {
 	
 	
 	private String barcode;
+	private String item;
 	private String price;
 	
-	
-	public FilteredProducts() {
+	public SortedItems() {
 		
 	}
 	
-	public FilteredProducts(String barcode, String price) {
+	public SortedItems(String barcode, String item, String price) {
 		super();
 		this.barcode = barcode;
-		this.setPrice(price);
+		this.item = item;
 	}
 	
 
@@ -28,6 +25,14 @@ public class FilteredProducts {
 	public void setbarcode(String barcode) {
 		this.barcode = barcode;
 	}
+	
+	public String getItem() {
+		return item;
+	}
+
+	public void setItem(String item) {
+		this.item = item;
+	}
 
 	public String getPrice() {
 		return price;
@@ -36,10 +41,5 @@ public class FilteredProducts {
 	public void setPrice(String price) {
 		this.price = price;
 	}
-
-
-
-	
-
 
 }

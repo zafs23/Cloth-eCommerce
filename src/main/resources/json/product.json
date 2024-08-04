@@ -17,18 +17,26 @@
     },
     {
       "barcode": "74001795",
-      "item": "b",
-      "category": "f",
+      "item": "jacket",
+      "category": "full body outfits",
       "price": 4500,
       "discount": 7,
       "available": 1
     },
     {
       "barcode": "74002450",
-      "item": "S",
-      "category": "A",
+      "item": "pants",
+      "category": "UnderWear",
       "price": 790,
       "discount": 12,
+      "available": 1
+    },
+    {
+      "barcode": "74003450",
+      "item": "Pants",
+      "category": "underwear",
+      "price": 800,
+      "discount": 11,
       "available": 1
     }
 ]
