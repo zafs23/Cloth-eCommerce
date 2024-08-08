@@ -5,11 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 public class Products {
 
 	@Id
+	@NotBlank(message = "Barcode should not be null")
 	@Column(name = "id")
 	@JsonProperty("barcode")
 	private String barcode;
@@ -20,12 +25,17 @@ public class Products {
 	@JsonProperty("category")
 	private String category;
 
+	@Positive
 	@JsonProperty("price")
 	private double price;
 
+	@Positive
 	@JsonProperty("discount")
 	private int discount;
 
+	@Positive
+	@Min(value = 0, message = "Enter 0 for not available")
+	@Max(value = 0, message = "Enter 1 for available")
 	@JsonProperty("available")
 	private int available;
 

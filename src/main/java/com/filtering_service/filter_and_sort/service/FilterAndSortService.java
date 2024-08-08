@@ -1,20 +1,21 @@
 package com.filtering_service.filter_and_sort.service;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
 import org.springframework.expression.ParseException;
 
 import com.filtering_service.filter_and_sort.dto.FilteredProducts;
 import com.filtering_service.filter_and_sort.dto.SortedItems;
 import com.filtering_service.filter_and_sort.dto.SortedProducts;
+import com.filtering_service.filter_and_sort.exception.ResourceNotFoundException;
 import com.filtering_service.filter_and_sort.model.Products;
 import com.filtering_service.filter_and_sort.repository.ProductRepository;
 
@@ -29,13 +30,10 @@ public class FilterAndSortService {
 		this.productRepository = productRepository;
 	}
 
-	public ArrayList<Products> createProducts(List<Products> products) throws Exception {
+	// handle exception automatically with validation
+	public ArrayList<Products> createProducts(List<Products> products) {
+		return (ArrayList<Products>) productRepository.saveAll(products);
 
-		try {
-			return (ArrayList<Products>) productRepository.saveAll(products);
-		} catch (Exception e) {
-			throw new BadRequestException();
-		}
 	}
 
 	// accepts an optional query string parameter item, and when this parameter is
@@ -51,7 +49,7 @@ public class FilterAndSortService {
 	// test by http://localhost:9090/sort/items?item=pants,jacket&sort=desc
 	public ArrayList<SortedItems> getItems(String items, String sort) throws Exception {
 
-		List<Products> itemList = new ArrayList<>();
+		List<Products> itemList ;
 
 		// parse
 		try {
@@ -64,9 +62,9 @@ public class FilterAndSortService {
 				itemList = productRepository.findByItemIgnoreCaseInOrderByPriceDesc(cityList);
 
 			}
-			
-			if (itemList == null) {
-				throw new BadRequestException();
+
+			if (itemList == null || itemList.size() == 0) {
+				throw new ResourceNotFoundException("Product are not found by items: " + itemList.toString());
 			}
 
 			return (ArrayList<SortedItems>) itemList.stream()
@@ -74,10 +72,6 @@ public class FilterAndSortService {
 
 		} catch (ParseException e) {
 			throw new ParseException(0, "String is not parsable", e);
-		} catch (NullPointerException e) {
-			throw new NullPointerException();
-		}catch (Exception e) {
-			throw new BadRequestException();
 		}
 
 	}
@@ -85,43 +79,43 @@ public class FilterAndSortService {
 
 	public ArrayList<FilteredProducts> filtered_Prodcuts(double minPrice, double maxPrice) throws Exception {
 		try {
-			List<Products> filtered_productList = new ArrayList<>();
-
-			// filter
-			filtered_productList = productRepository
+			List<Products> filtered_productList = productRepository
 					.findByPriceGreaterThanEqualAndPriceLessThanEqualOrderByPriceAsc(minPrice, maxPrice);
-			
-			if (filtered_productList == null) {
-				throw new BadRequestException();
+
+			if (filtered_productList == null || filtered_productList.size() == 0) {
+				throw new ResourceNotFoundException("");
+						
 			}
 
 			return (ArrayList<FilteredProducts>) filtered_productList.stream()
 					.map(product -> modelMapper.map(product, FilteredProducts.class)).collect(Collectors.toList());
 
-		} catch (Exception e) {
-			throw new BadRequestException();
+		} catch (ResourceNotFoundException e) {
+			throw new ResourceNotFoundException("Products are not found by min and max price respectively : " + minPrice + " and "+ maxPrice);
+
 		}
 
 	}
 
 	public SortedProducts[] sorted_Products() throws Exception {
 		try {
-			List<Products> sorted_productList = new ArrayList<>();
-
-			sorted_productList = productRepository.findAllByOrderByPriceAsc();
+			List<Products> sorted_productList = productRepository.findAllByOrderByPriceAsc();
 			
-			if (sorted_productList == null) {
-				throw new BadRequestException();
+			if(sorted_productList == null || sorted_productList.size() == 0) {
+				throw new ResourceNotFoundException("");
 			}
+				
+			
 
 			return sorted_productList.stream().map(product -> modelMapper.map(product, SortedProducts.class))
 					.collect(Collectors.toList()).toArray(new SortedProducts[sorted_productList.size()]);
-		} catch (BadRequestException e) {
-			throw new BadRequestException();
+		} catch (ResourceNotFoundException e) {
+			throw new Exception("Products are not found to sort");
 		}
 
 	}
 
+	// Do not delete, used to save data to DB
 	public Iterable<Products> save(List<Products> users) {
 		return productRepository.saveAll(users);
 	}
